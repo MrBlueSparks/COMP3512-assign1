@@ -3,8 +3,11 @@
 define('DBHOST', 'localhost');
 define('DBUSER', 'root');
 define('DBPASS', '');
-define('DBNAME', 'rbark369');
+define('DBNAME', 'stocks');
 define('DBCONNSTRING', 'mysql:host=' . DBHOST . ';dbname=' . DBNAME);
+
+$conn = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
 ?>

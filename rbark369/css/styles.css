@@ -1,0 +1,17 @@
+nav {
+    display: flex;
+    background-color: #333;
+    padding: 10px;
+    justify-content: center;
+
+    ul {
+        
+    }
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    display: block;
+}
