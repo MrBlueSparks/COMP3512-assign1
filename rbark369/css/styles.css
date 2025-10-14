@@ -18,11 +18,25 @@ nav {
     align-items: center;
 }
 
+h2 {
+    padding-left: 10px;
+}
+
 .nav-links a {
     color: white;
     text-decoration: none;
     padding: 14px 20px;
     display: block;
+}
+
+.api-table {
+    width : 100%;
+    border-collapse: collapse;
+    text-align: left;
+    td, th {
+        padding: 10px;
+    }
+
 }
 
 

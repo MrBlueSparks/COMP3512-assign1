@@ -20,8 +20,10 @@
             <li><a href="apiTester.php">APIs</a></li>
         </ul>
     </nav>
-    <h1>Welcome to the Home Page</h1>
-    <p>This is a simple home page.</p>
+    <h1>Welcome to the Stock Portfolio Project</h1>
+
+    </table>
+
 </body>
 
 </html>
