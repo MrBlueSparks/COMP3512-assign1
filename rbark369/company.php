@@ -4,18 +4,25 @@ include 'includes/db.inc.php';
 
 try {
 //fetch company info from db
-$symbol = $_GET['symbol'] ?? '';
+
+if (isset($_GET['symbol']) && !empty($_GET['symbol'])) {
+    $symbol = $_GET['symbol'];
+}else {
+    throw new Exception("No symbol provided" );
+}
+
+
 
 $sql = "SELECT * FROM companies WHERE symbol = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bindValue(1, $_GET['symbol']);
+$stmt->bindValue(1, $symbol);
 $stmt->execute();
 $result = $stmt->fetchAll();
 
 //fetch company history from db
 $sql2 = "SELECT * FROM history WHERE symbol = ? ORDER BY date DESC LIMIT 90";
 $stmt2 = $conn->prepare($sql2);
-$stmt2->bindValue(1, $_GET['symbol']);
+$stmt2->bindValue(1, $symbol);
 $stmt2->execute();
 $result2 = $stmt2->fetchAll();
 
@@ -23,13 +30,14 @@ $result2 = $stmt2->fetchAll();
 $sql3 = "SELECT MAX(high) AS max_high, MIN(low) AS min_low, 
 SUM(volume) AS total_volume, AVG(volume) AS avg_volume FROM history WHERE symbol = ?";
 $stmt3 = $conn->prepare($sql3);
-$stmt3->bindValue(1, $_GET['symbol']);
+$stmt3->bindValue(1, $symbol);
 $stmt3->execute();
 $summary = $stmt3->fetch(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
+
 ?>
 
 <html>
@@ -47,8 +55,9 @@ $summary = $stmt3->fetch(PDO::FETCH_ASSOC);
             <li><a href="apiTester.php">APIs</a></li>
         </ul>
     </nav>
-    <h1>Company Info</h1>
+    <div class="company">
     <table class="company-info">
+        <h2>Company Info</h2>
         <?php foreach ($result as $row): ?>
             <tr>
                 <th> Company Name: </th>
@@ -95,21 +104,43 @@ $summary = $stmt3->fetch(PDO::FETCH_ASSOC);
                     }
                     $financials = json_decode($jsonString, true);
                     
-                    echo "<tr><th>Years: </th><td>" . implode(', ', $financials["years"]) . "</td></tr>";
-                    echo "<tr><th>Revenue: </th><td>" . implode(', ',array_map('number_format', $financials["revenue"])) . "</td></tr>";
-                    echo "<tr><th>Earnings:</th><td>" . implode(', ',array_map('number_format', $financials["earnings"])) . "</td></tr>";
-                    echo "<tr><th>Assets:</th><td>" . implode(', ', array_map('number_format', $financials["assets"])) . "</td></tr>";
-                    echo "<tr><th>Liabilities:</th><td>" . implode(', ', array_map('number_format', $financials["liabilities"])) . "</td></tr>";
+                    if (!empty($financials)) {
+                    // Start table
+        
+                    
+                    // Table header row (Years)
+                    echo "<tr><th>Metric</th>";
+                    foreach ($financials["years"] as $year) {
+                        echo "<th>$year</th>";
+                    }
+                    echo "</tr>";
+
+                    // Helper to print a row given a label and dataset
+                    function print_financial_row($label, $data) {
+                        echo "<tr><th>$label</th>";
+                        foreach ($data as $value) {
+                            echo "<td>" . number_format($value) . "</td>";
+                        }
+                        echo "</tr>";
+                    }
+
+                    // Print each metric row
+                    print_financial_row("Revenue", $financials["revenue"]);
+                    print_financial_row("Earnings", $financials["earnings"]);
+                    print_financial_row("Assets", $financials["assets"]);
+                    print_financial_row("Liabilities", $financials["liabilities"]);
+                }
                     ?>
                 </table>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
-
+    
+    <h2> History (3M)</h2>
     <div class="company-data"> 
     <table class="history-table">
-        <tr><th colspan=5> History (3M) </th></tr>
+       
         <tr>
             <th> Date </th>
             <th> Volume</th>
@@ -146,6 +177,6 @@ $summary = $stmt3->fetch(PDO::FETCH_ASSOC);
         </div>
     </section>
     </div>
-
+    </div>
 </body>
 </html>

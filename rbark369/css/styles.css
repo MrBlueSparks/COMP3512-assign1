@@ -41,10 +41,29 @@ h2 {
 
 .history-table{
     padding: 20px;
-    width : 100%;
+    width:100%;
     border-collapse: collapse;
     background-color: #3a3a3a;
+    overflow: hidden;
+    border: 1px solid #444;
+
+    
 }
+.history-table th, .history-table td {
+  padding: 8px 12px;
+  text-align: right;
+  border-bottom: 1px solid #333;
+}
+
+.history-table th:first-child,
+.history-table td:first-child {
+  text-align: left;
+}
+
+.history-table tr:hover {
+  background-color: #2a2a2a;
+}
+
 .company-data{
     display: flex;
     flex-direction: row;
@@ -53,16 +72,23 @@ h2 {
     
 }
 
+.company{
+    padding: 1rem;
+}
+
 .company-summary {
     display: flex;
     flex-direction: column;
     
     padding: 1rem;
+    border: 1px solid #444;
+    height: fit-content;
+
 }
 .company-summary div {
     padding: 1rem;
     margin: 1rem;
-    
+    background-color: #3a3a3a;
 }
 
 body {
@@ -75,19 +101,28 @@ main {
     padding: 40px;
     justify-items: center;
  
-
-
 }
+
 main p {
-        text-align: left;
-        width: 40%;
-    }
+    text-align: left;
+    width: 40%;
+}
 
 
 .company-info{
     border-collapse: collapse;
-    width: 100%;
+    width: 80%;
+    margin-left: 1rem;
 }
+.company-info th {
+    text-align: left;
+    vertical-align: top;
+}
+.company-info td, .company-info th {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+}
+
 
 #financial-header {
     vertical-align: top;
@@ -97,6 +132,14 @@ main p {
 
 #financials-table {
     width: 100%;
-    border-collapse: collapse;
+  border-collapse: collapse;
+  border: 1px solid #444;  /* Outer border only */
+  border-radius: 8px;
+  overflow: hidden;
+}
+#financials-table th, #financials-table td {
+      border-bottom: 1px solid #333;
 
 }
+
+
