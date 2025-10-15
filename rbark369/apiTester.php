@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>About Page</title>
+    <title>API Tester</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
