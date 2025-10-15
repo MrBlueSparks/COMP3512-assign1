@@ -2,8 +2,6 @@
 //use helper file for db connection
 include 'includes/db.inc.php';
 
-
-
 try {
 //fetch company info from db
 $symbol = $_GET['symbol'] ?? '';
@@ -20,16 +18,25 @@ $stmt2 = $conn->prepare($sql2);
 $stmt2->bindValue(1, $_GET['symbol']);
 $stmt2->execute();
 $result2 = $stmt2->fetchAll();
+
+
+$sql3 = "SELECT MAX(high) AS max_high, MIN(low) AS min_low, 
+SUM(volume) AS total_volume, AVG(volume) AS avg_volume FROM history WHERE symbol = ?";
+$stmt3 = $conn->prepare($sql3);
+$stmt3->bindValue(1, $_GET['symbol']);
+$stmt3->execute();
+$summary = $stmt3->fetch(PDO::FETCH_ASSOC);
+
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
 ?>
 
-<!DOCTYPE html>
 <html>
 <head>
     <title>Company Info</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- Link to CSS file with cache busting -->
+    <link rel="stylesheet" href="css/styles.css?v=<?php echo time(); ?>">
 </head>
 <body>
     <nav>
@@ -41,7 +48,7 @@ $result2 = $stmt2->fetchAll();
         </ul>
     </nav>
     <h1>Company Info</h1>
-    <table>
+    <table class="company-info">
         <?php foreach ($result as $row): ?>
             <tr>
                 <th> Company Name: </th>
@@ -77,53 +84,66 @@ $result2 = $stmt2->fetchAll();
                 <td><?php echo htmlspecialchars($row['description']); ?></td>
             </tr>
             <tr>
-                <th> Financials: </th>
-                <td><?php echo htmlspecialchars($row['financials']); ?></td>
-    
-                <table>
+                <th id='financial-header'> Financials: </th>
+                <td> 
+                <table id='financials-table'>
                     <?php
-                    $financials = json_decode($row['financials'], true);
-                    echo "<tr><th>Years: </th><td>" . number_format($financials['years']) . "</td></tr>";
-                    echo "<tr><th>Revenue: </th><td>$financials[revenue]</td></tr>";
-                    echo "<tr><th>Earnings:</th> <td>$financials[earnings]</td></tr>";
-                    echo "<tr><th>Assets:</th> <td>$financials[assets]</td></tr>";
-                    echo "<tr><th>Earnings:</th> <td>$financials[liabilities]</td></tr>";
+                    $jsonString = $row['financials'] ?? '';
+
+                    if (!empty($jsonString)) {
+                        $jsonString = str_replace('`', '"', $jsonString);
+                    }
+                    $financials = json_decode($jsonString, true);
+                    
+                    echo "<tr><th>Years: </th><td>" . implode(', ', $financials["years"]) . "</td></tr>";
+                    echo "<tr><th>Revenue: </th><td>" . implode(', ',array_map('number_format', $financials["revenue"])) . "</td></tr>";
+                    echo "<tr><th>Earnings:</th><td>" . implode(', ',array_map('number_format', $financials["earnings"])) . "</td></tr>";
+                    echo "<tr><th>Assets:</th><td>" . implode(', ', array_map('number_format', $financials["assets"])) . "</td></tr>";
+                    echo "<tr><th>Liabilities:</th><td>" . implode(', ', array_map('number_format', $financials["liabilities"])) . "</td></tr>";
                     ?>
                 </table>
+                </td>
             </tr>
         <?php endforeach; ?>
     </table>
 
-    <div class= company-data> 
+    <div class="company-data"> 
     <table class="history-table">
         <tr><th colspan=5> History (3M) </th></tr>
         <tr>
             <th> Date </th>
-            <th> Volume</td>
+            <th> Volume</th>
             <th> Open</th>
             <th> Close</th>
             <th> High </th>
             <th> Low </th>
         </tr>
-        <tr>
         <?php foreach ($result2 as $row2): ?>
-    
-            <td><?php echo htmlspecialchars($row2['date']); ?></td>
-            <td><?php echo htmlspecialchars($row2['volume']); ?></td>
-            <td><?php echo htmlspecialchars($row2['open']); ?></td>
-            <td><?php echo htmlspecialchars($row2['close']); ?></td>
-            <td><?php echo htmlspecialchars($row2['high']); ?></td>
-            <td><?php echo htmlspecialchars($row2['low']); ?></td>
+        <tr>
             
+            <td><?php echo htmlspecialchars($row2['date']); ?></td>
+            <td><?php echo htmlspecialchars(number_format($row2['volume'])); ?></td>
+            <td><?php echo htmlspecialchars(number_format($row2['open'], 2)); ?></td>
+            <td><?php echo htmlspecialchars(number_format($row2['close'], 2)); ?></td>
+            <td><?php echo htmlspecialchars(number_format($row2['high'], 2)); ?></td>
+            <td><?php echo htmlspecialchars(number_format($row2['low'], 2)); ?></td>
         </tr>
         <?php endforeach; ?>
     </table>
 
-    <section class= company-info>
-        <div>History High</div>
-        <div>History Low</div>
-        <div> Total Volume</div>
-        <div> Average Volume</div>
+    <section class="company-summary">
+        <div><h3>History High</h3>
+            <?php echo htmlspecialchars(number_format($summary['max_high'], 2)); ?>
+        </div>
+        <div><h3>History Low</h3>
+            <?php echo htmlspecialchars(number_format($summary['min_low'], 2)); ?>
+        </div>
+        <div><h3> Total Volume</h3>
+            <?php echo htmlspecialchars(number_format($summary['total_volume'])); ?>
+        </div>
+        <div><h3> Average Volume</h3>
+            <?php echo htmlspecialchars(number_format($summary['avg_volume'], 2)); ?>
+        </div>
     </section>
     </div>
 
