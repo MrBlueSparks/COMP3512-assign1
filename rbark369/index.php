@@ -1,6 +1,40 @@
 <?php
-function displayPortfolio($user){
+function displayPortfolio($result){
+    ?>
+    <section class= 'portfolio-summary'>
+    <h3>Portfolio Summary</h3>
+        <?php foreach ($result as $row){?>
+        <div class='record-count'>
+            <h4>Companies</h4>
+            <p><?=$row['countRecords']?>
+        </div>
 
+        <div class='number-of-shares'>
+        <h4># Shares</h4>
+        <p><?=$row['numOfShares']?></p>
+        </div>
+        
+        <div class='total-value'>
+        <h4>Total Value</h4>
+        <p><?=number_format($row['totalValue'])?></p>
+        </div>
+        
+      </section>
+        <section class="portfolio-details">
+        <h3> Portfolio Details</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Sector</th>
+                    <th>Amount</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+        </table>
+        </section>
+        <?php } 
 }
 
 try {
@@ -12,6 +46,27 @@ ORDER BY lastname ASC";
 $result = $conn->query($sql);
 
 $button_pressed = isset($_POST['view_portfolio']);
+
+
+$sql2 = "SELECT 
+COUNT(portfolio.userId) AS countRecords,
+SUM(portfolio.amount) AS numOfShares,
+SUM(portfolio.amount * history.close) AS totalValue
+FROM portfolio 
+
+JOIN (SELECT symbol, MAX(date) AS latest_date
+FROM history
+GROUP BY symbol) latest 
+ON latest.symbol = portfolio.symbol  
+
+JOIN history 
+    ON portfolio.id = history.id
+WHERE portfolio.userId = ?";
+
+$statement = $conn->prepare($sql2);
+$statement->bindValue(1, $_POST['view_portfolio']);
+$statement->execute();
+$result2 = $statement->fetchAll();
 
 
 }
@@ -32,7 +87,7 @@ catch (PDOException $e){
         <ul class="nav-links">
             <li><a href="company.php?symbol=A">Companies</a></li>
             <li><a href="about.php">About</a></li>
-            <li><a href="apiTester.php">APIs</a></li>
+            <li><a href="apiTester.php">APIs</a></li>r
         </ul>
     </nav>
 
@@ -57,46 +112,21 @@ catch (PDOException $e){
     </section>
 
     <section class= 'portfolio'>
-    <section class= 'portfolio-summary'>
         <?php if (!$button_pressed){
             echo "<h3>Please select a customer's portfolio</h3>";
         }
-        else {?>
-        <h3>Portfolio Summary</h3>
-        <div class='record-count'>
-            <h4>Companies</h4>
-        </div>
-
-        <div class='number-of-shares'>
-        <h4># Shares</h4>
-        </div>
+   
         
-        <div class='total-value'>
-        <h4>Total Value</h4>
+        else {
+            displayPortfolio($result2);
+            ?>
         
-        </div>
 
         <?php } ?>
         
         
     </section>
-    <section class="portfolio-details">
-        <?php if($button_pressed){?>
-        <h3> Portfolio Details</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Symbol</th>
-                    <th>Name</th>
-                    <th>Sector</th>
-                    <th>Amount</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-        </table>
-
-        <?php } ?>
-    </section>
+    
 
     </section>
     </main>
