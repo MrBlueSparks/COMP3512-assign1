@@ -19,19 +19,19 @@
             <th> Description </th>
         </tr>
         <tr>
-            <td><a href=api/companies.php>/api/companies.php</a></td>
+            <td><a href="http://localhost/comp3512-assign1/rbark369/api/companies.php">/api/companies.php</a></td>
             <td>Returns all the companies/stocks</td>
         </tr>
         <tr>
-            <td><a href=/api/companies.php?ref=ads> /api/companies.php?ref=ads</a></td>
+            <td><a href="http://localhost/comp3512-assign1/rbark369/api/companies.php?ref=ads"> /api/companies.php?ref=ads</a></td>
             <td>Returns just a specific company/stocks</td>
         </tr>
         <tr>
-            <td><a href=/api/portfolio.php?ref=8>/api/portfolio.php?ref=8</a></td>
+            <td><a href="http://localhost/comp3512-assign1/rbark369/api/portfolio.php?ref=8">/api/portfolio.php?ref=8</a></td>
             <td>Returns all the portfolios for a specific sample customer</td>
         </tr>
         <tr>
-            <td><a href=/api/history.php?ref=ads>/api/history.php?ref=ads</a></td>
+            <td><a href="http://localhost/comp3512-assign1/rbark369/api/history.php?ref=ads">/api/history.php?ref=ads</a></td>
             <td>Returns the history information for a specific sample company</td>
         </tr>
     </table>
