@@ -143,9 +143,19 @@ main p {
 }
 
 /* home page*/
-.portfolio-button{
-    color: black;
+button {
+  background: #3B82F6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.9rem;
+  cursor: pointer;
 }
+button:hover {
+  background: #2563EB;
+}
+
 
 .customers{
     background-color: #333;
@@ -161,7 +171,7 @@ main p {
     
 }
 
-.portfolio-summary{
+.portfolio{
     border: 1px solid #444;  
     width: 100%;
     align-self: center;
@@ -172,4 +182,23 @@ main p {
 .customers-table tr{
     padding-bottom: 10%;
 }
+.portfolio-summary{
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.portfolio-summary h3{
+    width: 100%;
+}
 
+.record-count, .number-of-shares, .total-value{
+    padding:5%;
+    border: 1px solid #444;
+}
+
+
+
+.portfolio-details{
+    background-color:#333;
+}

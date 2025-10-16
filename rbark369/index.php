@@ -56,6 +56,7 @@ catch (PDOException $e){
 
     </section>
 
+    <section class= 'portfolio'>
     <section class= 'portfolio-summary'>
         <?php if (!$button_pressed){
             echo "<h3>Please select a customer's portfolio</h3>";
@@ -65,13 +66,38 @@ catch (PDOException $e){
         <div class='record-count'>
             <h4>Companies</h4>
         </div>
-        <h4># Shares</h4>
-        <h4>Total Value</h4>
 
+        <div class='number-of-shares'>
+        <h4># Shares</h4>
+        </div>
+        
+        <div class='total-value'>
+        <h4>Total Value</h4>
+        
+        </div>
 
         <?php } ?>
         
         
+    </section>
+    <section class="portfolio-details">
+        <?php if($button_pressed){?>
+        <h3> Portfolio Details</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Sector</th>
+                    <th>Amount</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+        </table>
+
+        <?php } ?>
+    </section>
+
     </section>
     </main>
     </table>
