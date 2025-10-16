@@ -1,8 +1,8 @@
 <?php 
 //use helper file for db connection
+try {
 include 'includes/db.inc.php';
 
-try {
 //fetch company info from db
 
 if (isset($_GET['symbol']) && !empty($_GET['symbol'])) {
