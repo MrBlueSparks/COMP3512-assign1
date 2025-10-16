@@ -19,7 +19,7 @@
             <th> Description </th>
         </tr>
         <tr>
-            <td><a href=/api/companies.php>/api/companies.php</a></td>
+            <td><a href=api/companies.php>/api/companies.php</a></td>
             <td>Returns all the companies/stocks</td>
         </tr>
         <tr>

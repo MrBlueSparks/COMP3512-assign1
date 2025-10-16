@@ -177,6 +177,7 @@ button:hover {
     align-self: center;
     padding-top: 20%;
     padding-bottom: 20%;
+    
 }
 
 .customers-table tr{
@@ -185,11 +186,13 @@ button:hover {
 .portfolio-summary{
     background-color: #333;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
+    height: 100%;
 }
 .portfolio-summary h3{
     width: 100%;
+    
 }
 
 .record-count, .number-of-shares, .total-value{
@@ -201,4 +204,18 @@ button:hover {
 
 .portfolio-details{
     background-color:#333;
+    justify-items: center;
+    
+}
+
+.portfolio-details-table{
+    border-collapse: collapse;
+    border: 1px solid #444;  /* Outer border only */
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+.portfolio-details-table th, .portfolio-details-table tr{
+    border-bottom: 1px solid #333;
 }
