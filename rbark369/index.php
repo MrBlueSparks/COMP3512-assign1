@@ -64,9 +64,12 @@ JOIN history
 WHERE portfolio.userId = ?";
 
 $statement = $conn->prepare($sql2);
+if ($button_pressed){
 $statement->bindValue(1, $_POST['view_portfolio']);
 $statement->execute();
 $result2 = $statement->fetchAll();
+}
+
 
 
 }
