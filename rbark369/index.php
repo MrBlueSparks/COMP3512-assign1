@@ -54,13 +54,14 @@ SUM(portfolio.amount) AS numOfShares,
 SUM(portfolio.amount * history.close) AS totalValue
 FROM portfolio 
 
+JOIN history 
+    ON portfolio.id = history.id
+
 JOIN (SELECT symbol, MAX(date) AS latest_date
 FROM history
 GROUP BY symbol) latest 
 ON latest.symbol = portfolio.symbol  
 
-JOIN history 
-    ON portfolio.id = history.id
 WHERE portfolio.userId = ?";
 
 $statement = $conn->prepare($sql2);
