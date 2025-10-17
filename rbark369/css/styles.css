@@ -133,7 +133,7 @@ main p {
 #financials-table {
     width: 100%;
   border-collapse: collapse;
-  border: 1px solid #444;  /* Outer border only */
+  border: 1px solid #444;  
   border-radius: 8px;
   overflow: hidden;
 }
@@ -142,79 +142,173 @@ main p {
 
 }
 
-/* home page*/
-button {
-  background: #3B82F6;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.4rem 0.9rem;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-button:hover {
-  background: #2563EB;
-}
-
-
-.customers{
-    background-color: #333;
-    width: 25%;
-    border: 1px solid #444;  
-    padding: 1rem;
-}
-
-
 
 .main-home{
     display: flex;
-    
+    gap: 60px;
+    align-items: stretch;
 }
 
 .portfolio{
     border: 1px solid #444;  
     width: 100%;
     align-self: center;
-    padding-top: 20%;
-    padding-bottom: 20%;
     
+    
+}
+
+.customers{
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 20px;
+  flex: 1;
+}
+
+.portfolio,
+.customers {
+  flex: 1;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+.customers-table{
+width: 100%;
+  border-collapse: collapse;
+}
+
+.customers-table th {
+  padding: 10px;
+  background-color: #333;
+  color: #9cc3ff;
+  border-bottom: 1px solid #444;
+  font-weight: 600;
+}
+
+.name-column{
+    text-align: left;
+}
+
+
+.customers-table td {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+  color: #ddd;
+  vertical-align: middle;
+}
+
+.customers-table tr:hover {
+  background-color: #333;
 }
 
 .customers-table tr{
     padding-bottom: 10%;
 }
-.portfolio-summary{
-    background-color: #333;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    height: 100%;
-}
-.portfolio-summary h3{
-    width: 100%;
-    
-}
 
-.record-count, .number-of-shares, .total-value{
-    padding:5%;
-    border: 1px solid #444;
+.portfolio-summary {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+  margin: 20px 0;
 }
 
-
-
-.portfolio-details{
-    background-color:#333;
-    justify-items: center;
-    
+.portfolio-summary h3 {
+  width: 100%;
+  font-size: 1.2rem;
+  color: #f5f5f5;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+  text-align: left;
+}
+.portfolio-button {
+  background: #3B82F6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
-.portfolio-details-table{
-    border-collapse: collapse;
-    border: 1px solid #444;  /* Outer border only */
-    border-radius: 8px;
-    overflow: hidden;
+
+.record-count, .number-of-shares, .total-value {
+  flex: 1;
+  min-width: 180px;
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+.record-count h4,
+.number-of-shares h4,
+.total-value h4 {
+  color: #9cc3ff;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.record-count p,
+.number-of-shares p,
+.total-value p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+
+}
+
+
+.portfolio-details {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.portfolio-details h3 {
+  font-size: 1.2rem;
+  color: #f5f5f5;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+  text-align: left;
+}
+.portfolio-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+
+.portfolio-details-table th {
+  color: #9cc3ff;
+  font-weight: 600;
+  background-color: #333;
+}
+
+.portfolio-details-table td {
+  color: #ddd;
+}
+
+.portfolio-details-table tr:hover {
+  background-color: #333;
+}
 
 .portfolio-details-table th, .portfolio-details-table tr{
     border-bottom: 1px solid #333;

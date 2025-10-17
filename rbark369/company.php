@@ -8,7 +8,8 @@ include 'includes/db.inc.php';
 if (isset($_GET['symbol']) && !empty($_GET['symbol'])) {
     $symbol = $_GET['symbol'];
 }else {
-    throw new Exception("No symbol provided" );
+    echo "<p>Error: No company symbol provided in the query string.</p>";
+    exit;
 }
 
 
@@ -18,6 +19,11 @@ $stmt = $conn->prepare($sql);
 $stmt->bindValue(1, $symbol);
 $stmt->execute();
 $result = $stmt->fetchAll();
+
+if (!$result) {
+    echo "<p>No company found with the symbol '" . htmlspecialchars($symbol) . "'.</p>";
+    exit;
+}
 
 //fetch company history from db
 $sql2 = "SELECT * FROM history WHERE symbol = ? ORDER BY date DESC LIMIT 90";
@@ -105,8 +111,6 @@ $summary = $stmt3->fetch(PDO::FETCH_ASSOC);
                     $financials = json_decode($jsonString, true);
                     
                     if (!empty($financials)) {
-                    // Start table
-        
                     
                     // Table header row (Years)
                     echo "<tr><th>Metric</th>";
