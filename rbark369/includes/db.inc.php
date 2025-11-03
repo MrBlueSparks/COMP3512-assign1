@@ -1,12 +1,9 @@
 <?php
 //helper file for database connection
-define('DBHOST', 'localhost');
-define('DBUSER', 'root');
-define('DBPASS', '');
-define('DBNAME', 'stocks');
-define('DBCONNSTRING', 'mysql:host=' . DBHOST . ';dbname=' . DBNAME);
+define('DBPATH', 'data/stocks.db');
+define('DBCONNSTRING', 'sqlite:' . DBPATH);
 
-$conn = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+$conn = new PDO(DBCONNSTRING);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 

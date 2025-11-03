@@ -9,6 +9,10 @@ $result = $conn->query($sql);
 
 $button_pressed = isset($_POST['view_portfolio']);
 
+// Initialize variables
+$result2 = [];
+$result3 = [];
+
 //portfolio summary
 $sql2 = "SELECT 
 COUNT(portfolio.userId) AS countRecords,
