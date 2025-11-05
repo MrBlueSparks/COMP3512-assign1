@@ -17,8 +17,15 @@ if (isset($_GET['ref'])){
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($result);
 } 
+else {
+    $sql = "SELECT * FROM portfolio";
+    $stmt = $conn->query($sql);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($result);
+}
 }
 catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    http_response_code(500);
+    echo json_encode(['error' => $e->getMessage()]);
 }
 ?>

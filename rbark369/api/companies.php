@@ -21,11 +21,12 @@ if (isset($_GET['ref'])){
  else {
     $sql = "SELECT * FROM companies";
     $stmt= $conn->query($sql);
-    $result = $stmt->fetchAll();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($result);
 }
 }
 catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    http_response_code(500);
+    echo json_encode(['error' => $e->getMessage()]);
 }
 ?>

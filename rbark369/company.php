@@ -18,7 +18,7 @@ $sql = "SELECT * FROM companies WHERE symbol = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bindValue(1, $symbol);
 $stmt->execute();
-$result = $stmt->fetchAll();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (!$result) {
     echo "<p>No company found with the symbol '" . htmlspecialchars($symbol) . "'.</p>";
