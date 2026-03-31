@@ -9,7 +9,7 @@ include '../includes/db.inc.php';
 //checks if there is ref parameter
 
 if (isset($_GET['ref'])){
-    $symbol = $_GET['ref'];
+    $symbol = strtoupper($_GET['ref']);
     $sql = "SELECT * FROM companies WHERE symbol = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(1, $symbol);
